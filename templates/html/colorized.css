@@ -1,17 +1,21 @@
-.base03 {background-color: <%= @theme.base03 %>}
-.base02 {background-color: <%= @theme.base02 %>}
-.base01 {color:            <%= @theme.base01 %>}
-.base00 {color:            <%= @theme.base00 %>}
-.base0  {color:            <%= @theme.base0  %>}
-.base1  {color:            <%= @theme.base1  %>}
-.base2  {background-color: <%= @theme.base2  %>}
-.base3  {backgrount-color: <%= @theme.base3 %>}
+.dark  {background-color: <%= @srgb.base03 %>; color: <%= @srgb.base0  %>}
+.light {background-color: <%= @srgb.base3  %>; color: <%= @srgb.base00 %>}
 
-.yellow  {color: <%= @theme.yellow  %>}
-.orange  {color: <%= @theme.orange  %>}
-.red     {color: <%= @theme.red     %>}
-.magenta {color: <%= @theme.magenta %>}
-.violet  {color: <%= @theme.violet  %>}
-.blue    {color: <%= @theme.blue    %>}
-.cyan    {color: <%= @theme.cyan    %>}
-.green   {color: <%= @theme.green   %>}
+.dark .highlight  {background-color: <%= @srgb.base02 %>}
+.dark .emphasis   {color:            <%= @srgb.base1  %>}
+.dark .secondary  {color:            <%= @srgb.base01 %>}
+
+.light .highlight {background-color: <%= @srgb.base2  %>}
+.light .emphasis  {color:            <%= @srgb.base01 %>}
+.light .secondary {color:            <%= @srgb.base1  %>}
+
+.light .dark .highlight {background-color: <%= @srgb.base02 %>}
+
+.yellow  {color: <%= @srgb.yellow  %>}
+.orange  {color: <%= @srgb.orange  %>}
+.red     {color: <%= @srgb.red     %>}
+.magenta {color: <%= @srgb.magenta %>}
+.violet  {color: <%= @srgb.violet  %>}
+.blue    {color: <%= @srgb.blue    %>}
+.cyan    {color: <%= @srgb.cyan    %>}
+.green   {color: <%= @srgb.green   %>}

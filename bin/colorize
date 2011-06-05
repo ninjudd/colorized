@@ -6,13 +6,48 @@ require 'ostruct'
 require 'fileutils'
 require 'pp'
 
+@root      = File.dirname(__FILE__) + '/..'
+@templates = "#{@root}/templates"
+@profiles  = "#{@root}/profiles"
+
+begin
+  require 'rubygems'
+  require 'rmagick'
+
+  def convert(color, color_profile)
+    img = Magick::Image.new(1,1)
+    img.store_pixels(0,0,1,1,[Magick::Pixel.from_color(color)])
+    img.add_profile("#{@profiles}/srgb.icc")
+    img.add_profile("#{@profiles}/#{color_profile}.icc")
+    img.pixel_color(0,0).to_color(Magick::AllCompliance, false, 8)
+  end
+rescue LoadError => e
+  puts "Warning: Cannot find RMagick\n  unable to convert colors from sRGB, so colors won't be correct in all Apps."
+
+  def convert(color, color_profile)
+    color
+  end
+end
+
+def color_struct(hash, color_profile = nil)
+  keys = []
+  vals = []
+  hash.each do |k,v|
+    keys << k.to_sym
+    vals << (color_profile ? convert(v, color_profile) : v)
+  end
+  Struct.new(*keys).new(*vals)
+end
+
 @theme_file = ARGV.first
 @theme_name = File.basename(@theme_file, '.yml')
-@theme      = OpenStruct.new(YAML::load_file(@theme_file))
-@templates  = File.dirname(File.expand_path(__FILE__)) + '/../templates'
+@theme_dir  = File.dirname(@theme_file) + "/#{@theme_name}"
+@theme      = YAML::load_file(@theme_file)
+@srgb       = color_struct(@theme)
+@rgb        = color_struct(@theme, :generic_rgb)
 
 def generate_file(template)
-  file = template.gsub(@templates, @theme_name)
+  file = template.gsub(@templates, @theme_dir)
   dir  = File.dirname(file)
   FileUtils.mkdir_p(dir) unless File.exists?(dir)
   File.open(file, 'w') do |f|
@@ -20,7 +55,7 @@ def generate_file(template)
   end
 end
 
-Find.find(@templates) do |file|
-  next if File.directory?(file)
-  generate_file(file)
+Find.find(@templates) do |template|
+  next if File.directory?(template)
+  generate_file(template)
 end

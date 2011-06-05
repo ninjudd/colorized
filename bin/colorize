@@ -1,0 +1,26 @@
+#!/usr/bin/env ruby
+require 'yaml'
+require 'erb'
+require 'find'
+require 'ostruct'
+require 'fileutils'
+require 'pp'
+
+@theme_file = ARGV.first
+@theme_name = File.basename(@theme_file, '.yml')
+@theme      = OpenStruct.new(YAML::load_file(@theme_file))
+@templates  = File.dirname(File.expand_path(__FILE__)) + '/../templates'
+
+def generate_file(template)
+  file = template.gsub(@templates, @theme_name)
+  dir  = File.dirname(file)
+  FileUtils.mkdir_p(dir) unless File.exists?(dir)
+  File.open(file, 'w') do |f|
+    f.write ERB.new(IO.read(template)).result(binding)
+  end
+end
+
+Find.find(@templates) do |file|
+  next if File.directory?(file)
+  generate_file(file)
+end

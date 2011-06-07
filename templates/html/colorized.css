@@ -10,6 +10,8 @@
 .light .secondary {color:            <%= @srgb.base1  %>}
 
 .light .dark .highlight {background-color: <%= @srgb.base02 %>}
+.light .dark .emphasis   {color:            <%= @srgb.base1  %>}
+.light .dark .secondary  {color:            <%= @srgb.base01 %>}
 
 .yellow  {color: <%= @srgb.yellow  %>}
 .orange  {color: <%= @srgb.orange  %>}

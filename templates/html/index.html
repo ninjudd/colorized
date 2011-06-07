@@ -1,9 +1,10 @@
 <head>
-<link rel="stylesheet" type="text/css" href="colorized.css">
+<link rel="stylesheet" type="text/css" href="<%= @theme_name %>.css">
 </head>
 <body class="light" style="font-family:Menlo, monospace">
 
-<div class="dark" style="padding:10px 20px">
+<% for type in [:dark, :light] %>
+<div class="<%= type %>" style="padding:10px 20px">
 <p>primary</p>
 <p class="emphasis" >emphasis  </p>
 <p class="secondary">secondary </p>
@@ -16,21 +17,18 @@
 <p class="blue"     >blue   </p>
 <p class="cyan"     >cyan   </p>
 <p class="green"    >green  </p>
+<br>
+<p class="<%= @code.comment  %>" ><em># comment</em></p>
+<p class="<%= @code.constant %>" >CONSTANT</p>
+<p><b class="<%= @code.function %>" >function</b>()</p>
+<p class="<%= @code.builtin  %>" ><b>builtin</b></p>
+<p class="<%= @code.variable %>" >variable</p>
+<p class="<%= @code.datatype %>" >datatype</p>
+<p class="<%= @code.string   %>" >"string"</p>
+<p class="<%= @code.keyword  %>" >:keyword</p>
+<p class="<%= @code.warning  %>" ><b>WARNING</b></p>
+<p class="<%= @code.preproc  %>" >#PREPROCESSOR</p>
 </div>
-
-<div class="light" style="padding:10px 20px">
-<p>primary</p>
-<p class="emphasis" >emphasis  </p>
-<p class="secondary">secondary </p>
-<p class="highlight">highlight </p>
-<p class="yellow"   >yellow    </p>
-<p class="orange"   >orange    </p>
-<p class="red"      >red       </p>
-<p class="magenta"  >magenta   </p>
-<p class="violet"   >violet    </p>
-<p class="blue"     >blue      </p>
-<p class="cyan"     >cyan      </p>
-<p class="green"    >green     </p>
-</div>
+<% end %>
 
 </body>

@@ -6,7 +6,7 @@ require 'ostruct'
 require 'fileutils'
 require 'pp'
 
-@root      = File.dirname(__FILE__) + '/..'
+@root      = File.dirname(File.dirname(__FILE__))
 @templates = "#{@root}/templates"
 @profiles  = "#{@root}/profiles"
 
@@ -14,11 +14,11 @@ begin
   require 'rubygems'
   require 'rmagick'
 
-  def convert(color, color_profile)
+  def convert(color, from_profile, to_profile)
     img = Magick::Image.new(1,1)
     img.store_pixels(0,0,1,1,[Magick::Pixel.from_color(color)])
-    img.add_profile("#{@profiles}/srgb.icc")
-    img.add_profile("#{@profiles}/#{color_profile}.icc")
+    img.add_profile("#{@profiles}/#{from_profile}.icc")
+    img.add_profile("#{@profiles}/#{to_profile}.icc")
     img.pixel_color(0,0).to_color(Magick::AllCompliance, false, 8)
   end
 rescue LoadError => e
@@ -29,27 +29,43 @@ rescue LoadError => e
   end
 end
 
-def color_struct(hash, color_profile = nil)
+def struct(hash)
   keys = []
   vals = []
   hash.each do |k,v|
     keys << k.to_sym
-    vals << (color_profile ? convert(v, color_profile) : v)
+    vals << (block_given? ? yield(v) : v)
   end
   Struct.new(*keys).new(*vals)
 end
+
+CODE = {
+  :comment  => "secondary",
+  :function => "violet",
+  :builtin  => "blue",
+  :datatype => "green",
+  :variable => "orange",
+  :string   => "cyan",
+  :constant => "yellow",
+  :keyword  => "emphasis",
+  :warning  => "red",
+  :preproc  => "magenta",
+}
 
 @theme_file = ARGV.first
 @theme_name = File.basename(@theme_file, '.yml')
 @theme_dir  = File.dirname(@theme_file) + "/#{@theme_name}"
 @theme      = YAML::load_file(@theme_file)
-@srgb       = color_struct(@theme)
-@rgb        = color_struct(@theme, :generic_rgb)
+@code       = struct(CODE.merge(@theme.delete("code") || {}))
+@srgb       = struct(@theme)
+@rgb        = struct(@theme) {|c| convert(c, :srgb, :generic_rgb)}
+@lab        = struct(@theme) {|c| convert(c, :srgb, :generic_lab)}
 
 def generate_file(template)
-  file = template.gsub(@templates, @theme_dir)
+  file = template.gsub(@templates, @theme_dir).gsub('colorized', @theme_name)
   dir  = File.dirname(file)
   FileUtils.mkdir_p(dir) unless File.exists?(dir)
+  puts "#{template}\t-> #{file}"
   File.open(file, 'w') do |f|
     f.write ERB.new(IO.read(template)).result(binding)
   end

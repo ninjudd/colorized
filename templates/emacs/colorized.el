@@ -28,7 +28,6 @@
   (let ((emphasis   (if light? base01 base1 ))
         (primary    (if light? base00 base0 ))
         (secondary  (if light? base1  base01))
-        (secondary  (if light? base1  base01))
         (highlight  (if light? base2  base02))
         (background (if light? base3  base03)))
     (let ((comment    <%=@code.comment%>)
@@ -89,6 +88,14 @@
          (tabbar-unselected ((t (:background ,secondary :foreground ,background :box nil))))
          (tabbar-selected   ((t (:background ,background :foreground ,secondary :box nil))))
          (tabbar-highlight  ((t (:underline t))))
+         ;; erc
+         (erc-default-face      ((t (:foreground ,primary))))
+         (erc-timestamp-face    ((t (:foreground ,secondary :bold nil))))
+         (erc-notice-face       ((t (:foreground ,secondary :bold nil))))
+         (erc-input-face        ((t (:foreground nil :background ,highlight))))
+         (erc-prompt-face       ((t (:foreground ,secondary :background ,background))))
+         (erc-current-nick-face ((t (:foreground ,cyan :bold t))))
+         (erc-my-nick-face      ((t (:foreground ,cyan :bold t))))
          ;; show-paren
          (show-paren-match-face    ((t (:background ,secondary))))
          (show-paren-mismatch-face ((t (:background ,red)))))))))

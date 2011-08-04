@@ -97,8 +97,8 @@
          (erc-current-nick-face ((t (:foreground ,cyan :bold t))))
          (erc-my-nick-face      ((t (:foreground ,cyan :bold t))))
          ;; show-paren
-         (show-paren-match-face    ((t (:background ,secondary))))
-         (show-paren-mismatch-face ((t (:background ,red)))))))))
+         (show-paren-match    ((t (:background ,highlight))))
+         (show-paren-mismatch ((t (:background ,red)))))))))
 
 (add-to-list 'color-themes
              '(color-theme-<%=@theme_name%>

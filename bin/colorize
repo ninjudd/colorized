@@ -24,7 +24,7 @@ begin
 rescue LoadError => e
   puts "Warning: Cannot find RMagick\n  unable to convert colors from sRGB, so colors won't be correct in all Apps."
 
-  def convert(color, color_profile)
+  def convert(color, from_profile, to_profile)
     color
   end
 end

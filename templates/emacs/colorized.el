@@ -96,6 +96,16 @@
          (erc-prompt-face       ((t (:foreground ,secondary :background ,background))))
          (erc-current-nick-face ((t (:foreground ,cyan :bold t))))
          (erc-my-nick-face      ((t (:foreground ,cyan :bold t))))
+         ;; jabber
+         (jabber-title-large         ((t (:foreground ,primary :bold t))))
+         (jabber-title-medium        ((t (:foreground ,primary :bold t))))
+         (jabber-title-small         ((t (:foreground ,primary :bold t))))
+         (jabber-chat-prompt-local   ((t (:foreground ,cyan   :bold t))))
+         (jabber-chat-prompt-foreign ((t (:foreground ,yellow :bold t))))
+         (jabber-rare-time-face      ((t (:foreground ,green))))
+         (jabber-roster-user-online  ((t (:foreground ,yellow))))
+         (jabber-roster-user-away    ((t (:foreground ,red))))
+         (jabber-roster-user-offline ((t (:foreground ,secondary))))
          ;; show-paren
          (show-paren-match    ((t (:background ,highlight))))
          (show-paren-mismatch ((t (:background ,red)))))))))

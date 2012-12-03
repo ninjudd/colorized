@@ -102,7 +102,7 @@
          (jabber-title-small         ((t (:foreground ,primary :bold t))))
          (jabber-chat-prompt-local   ((t (:foreground ,primary :bold t))))
          (jabber-chat-prompt-foreign ((t (:foreground ,primary :bold t))))
-         (jabber-rare-time-face      ((t (:foreground ,green))))
+         (jabber-rare-time-face      ((t (:foreground ,secondary))))
          (jabber-roster-user-online  ((t (:foreground ,yellow))))
          (jabber-roster-user-away    ((t (:foreground ,red))))
          (jabber-roster-user-offline ((t (:foreground ,secondary))))

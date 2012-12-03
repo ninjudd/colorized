@@ -39,6 +39,17 @@ def struct(hash)
   Struct.new(*keys).new(*vals)
 end
 
+def components(color)
+  p = Magick::Pixel.from_color(color)
+  [p.red, p.green, p.blue]
+end
+
+def components_f(color)
+  components(color).collect do |n|
+    n * 1.0 / Magick::QuantumRange
+  end
+end
+
 CODE = {
   :comment  => "secondary",
   :function => "violet",
@@ -52,6 +63,11 @@ CODE = {
   :preproc  => "magenta",
 }
 
+if ARGV.empty?
+  puts "usage: colorize themes/name.yml"
+  exit 1
+end
+
 @theme_file = ARGV.first
 @theme_name = File.basename(@theme_file, '.yml')
 @theme_dir  = File.dirname(@theme_file) + "/#{@theme_name}"
@@ -62,7 +78,7 @@ CODE = {
 @lab        = struct(@theme) {|c| convert(c, :srgb, :generic_lab)}
 
 def generate_file(template)
-  file = template.gsub(@templates, @theme_dir).gsub('colorized', @theme_name)
+  file = template.gsub(@templates, @theme_dir).gsub('colorized', @theme_name).gsub('Colorized', @theme_name.capitalize)
   dir  = File.dirname(file)
   FileUtils.mkdir_p(dir) unless File.exists?(dir)
   puts "#{template}\t-> #{file}"

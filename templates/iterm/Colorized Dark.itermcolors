@@ -1,0 +1,45 @@
+<%
+  def color(name, color)
+    r,g,b = components_f(color)
+
+    ["  <key>#{name}</key>",
+     "  <dict>",
+     "    <key>Red Component</key>",
+     "    <real>#{r}</real>",
+     "    <key>Blue Component</key>",
+     "    <real>#{b}</real>",
+     "    <key>Green Component</key>",
+     "    <real>#{g}</real>",
+     "  </dict>"].join("\n")
+  end
+%>
+
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+<%= color("Ansi 0 Color", @rgb.base02) %>
+<%= color("Ansi 1 Color", @rgb.orange) %>
+<%= color("Ansi 2 Color", @rgb.green) %>
+<%= color("Ansi 3 Color", @rgb.yellow) %>
+<%= color("Ansi 4 Color", @rgb.violet) %>
+<%= color("Ansi 5 Color", @rgb.magenta) %>
+<%= color("Ansi 6 Color", @rgb.cyan) %>
+<%= color("Ansi 7 Color", @rgb.base0) %>
+<%= color("Ansi 8 Color", @rgb.base01) %>
+<%= color("Ansi 9 Color", @rgb.red) %>
+<%= color("Ansi 10 Color", @rgb.green) %>
+<%= color("Ansi 11 Color", @rgb.yellow) %>
+<%= color("Ansi 12 Color", @rgb.blue) %>
+<%= color("Ansi 13 Color", @rgb.magenta) %>
+<%= color("Ansi 14 Color", @rgb.cyan) %>
+<%= color("Ansi 15 Color", @rgb.base1) %>
+<%= color("Background Color", @rgb.base03) %>
+<%= color("Foreground Color", @rgb.base0) %>
+<%= color("Bold Color", @rgb.base1) %>
+<%= color("Cursor Color", @rgb.base01) %>
+<%= color("Cursor Text Color", @rgb.base02) %>
+<%= color("Selected Text Color", @rgb.base02) %>
+<%= color("Selection Color", @rgb.base01) %>
+</dict>
+</plist>
